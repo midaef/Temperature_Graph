@@ -38,11 +38,21 @@ def get_weather(latitude, longitude, city):
 
 
 def get_latlon(city):
-	r = requests.get(latlon_url + city + latlon_api_key).text
+	try:
+		r = requests.get(latlon_url + city + latlon_api_key).text
+	except:
+		print('Check internet connection')
+		exit()
+
 	lljsn = json.loads(r)
-	longitude = lljsn['results'][0]['geometry']['lng']
-	latitude  = lljsn['results'][0]['geometry']['lat']
-	return [latitude, longitude]
+
+	try:
+		longitude = lljsn['results'][0]['geometry']['lng']
+		latitude  = lljsn['results'][0]['geometry']['lat']
+		return [latitude, longitude]
+	except:
+		print('City not found')
+		exit()
 
 
 def fahrenheit_to_celsius(temp):
