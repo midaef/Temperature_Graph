@@ -67,7 +67,6 @@ def get_latlon(city):
 		return [latitude, longitude]
 	except:
 		return 'no_city'
-		print('City not found')
 
 
 def fahrenheit_to_celsius(temp):
