@@ -28,28 +28,33 @@ def watch():
 		entry.insert(0, 'City not found')
 	else:
 		root.destroy()
-		get_weather(latlon[0], latlon[1], city)
+		get_weather(latlon[0], latlon[1], latlon[2])
 
 
 
 def get_weather(latitude, longitude, city):
 	r = requests.get(weather_url + weather_api_key + '/' + str(latitude) + ',' + str(longitude)).text
 	jsn = json.loads(r)
+
 	temps = []
 	times = []
+	winds = []
+
 	jsn = jsn['hourly']['data']
 	for i in jsn:
 		temps.append(fahrenheit_to_celsius(i['temperature']))
 		times.append(datetime.datetime.fromtimestamp(int(i['time'])))
+		winds.append(i['windSpeed'])
 
-	pl = plt.plot(times, temps, label = 'Temperature change', c = 'green', lw = 3.5, marker = 'o', mec = 'red')
+	pl1 = plt.plot(times, temps, label = 'Temperature change', c = 'green', lw = 3.5, marker = 'o', mec = 'red')
+	pl2 = plt.plot(times, winds, label = 'Wind speed change', c = 'blue', lw = 0.5)
 	plt.gcf().autofmt_xdate()
 	myFmt = mdates.DateFormatter('%H:%M')
 	plt.gca().xaxis.set_major_formatter(myFmt)
-	plt.legend(handles=[pl[0]])
+	plt.legend(handles=[pl1[0], pl2[0]])
 	plt.xlabel('Hours')
-	plt.ylabel('Temperature')
-	plt.title(city.capitalize())
+	plt.ylabel('Temperature/Wind speed')
+	plt.title(city)
 	plt.show()
 
 
@@ -64,7 +69,8 @@ def get_latlon(city):
 	try:
 		longitude = lljsn['results'][0]['geometry']['lng']
 		latitude  = lljsn['results'][0]['geometry']['lat']
-		return [latitude, longitude]
+		c = lljsn['results'][0]['formatted']
+		return [latitude, longitude, c]
 	except:
 		return 'no_city'
 
