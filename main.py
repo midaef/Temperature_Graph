@@ -26,7 +26,7 @@ def get_weather(latitude, longitude, city):
 		temps.append(fahrenheit_to_celsius(i['temperature']))
 		times.append(datetime.datetime.fromtimestamp(int(i['time'])))
 
-	pl = plt.plot(times, temps, label = 'Temperature change', c = 'green', lw = 3.5, marker = 'o')
+	pl = plt.plot(times, temps, label = 'Temperature change', c = 'green', lw = 3.5, marker = 'o', mec = 'red')
 	plt.gcf().autofmt_xdate()
 	myFmt = mdates.DateFormatter('%H:%M')
 	plt.gca().xaxis.set_major_formatter(myFmt)
