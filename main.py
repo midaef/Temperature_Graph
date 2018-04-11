@@ -1,6 +1,7 @@
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+from tkinter import *
 from ezprint import p
 import pandas as pd
 import datetime
@@ -14,6 +15,21 @@ latlon_url = 'https://api.opencagedata.com/geocode/v1/json?q='
 latlon_api_key = '&key=784aa1346e1d46c9ad32544372f7316e'
 weather_url = 'https://api.darksky.net/forecast/'
 weather_api_key = '08d603a88b0d98d0c6b24dfb41f716bc'
+
+
+def watch():
+	city = entry.get()
+	latlon = get_latlon(city)
+	if latlon == 'no_net':
+		entry.delete(0, END)
+		entry.insert(0, 'No connection')
+	elif latlon == 'no_city':
+		entry.delete(0, END)
+		entry.insert(0, 'City not found')
+	else:
+		root.destroy()
+		get_weather(latlon[0], latlon[1], city)
+
 
 
 def get_weather(latitude, longitude, city):
@@ -41,8 +57,7 @@ def get_latlon(city):
 	try:
 		r = requests.get(latlon_url + city + latlon_api_key).text
 	except:
-		print('Check internet connection')
-		exit()
+		return 'no_net'
 
 	lljsn = json.loads(r)
 
@@ -51,8 +66,8 @@ def get_latlon(city):
 		latitude  = lljsn['results'][0]['geometry']['lat']
 		return [latitude, longitude]
 	except:
+		return 'no_city'
 		print('City not found')
-		exit()
 
 
 def fahrenheit_to_celsius(temp):
@@ -65,7 +80,21 @@ def kelvin_to_celsius(temp):
 	return t
 
 
-city = 'irkutsk'
-latlon = get_latlon(city)
+root = Tk()
 
-get_weather(latlon[0], latlon[1], city)
+root.title('Weather') 
+
+label = Label(root, text = 'City name:')
+entry = Entry(root, width = 20)
+button = Button(root, text = 'Watch weather', command = watch)
+
+label.config(font = ('Arial', 20, 'bold'))
+entry.config(font = ('Arial', 20, 'bold'))
+button.config(font = ('Arial', 20, 'bold'))
+
+label.grid(column = 0, row = 0)
+entry.grid(column = 1, row = 0)
+button.grid(column = 1, columnspan = 2)
+
+
+root.mainloop()
