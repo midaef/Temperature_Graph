@@ -40,22 +40,41 @@ def get_weather(latitude, longitude, city):
 	times = []
 	winds = []
 
-	jsn = jsn['hourly']['data']
-	for i in jsn:
-		temps.append(fahrenheit_to_celsius(i['temperature']))
-		times.append(datetime.datetime.fromtimestamp(int(i['time'])))
-		winds.append(i['windSpeed'])
+	if v.get() == 1:
+		jsn = jsn['hourly']['data']
+		for i in jsn:
+			temps.append(fahrenheit_to_celsius(i['temperature']))
+			times.append(datetime.datetime.fromtimestamp(int(i['time'])))
+			winds.append(i['windSpeed'])
 
-	pl1 = plt.plot(times, temps, label = 'Temperature change', c = 'green', lw = 3.5, marker = 'o', mec = 'red')
-	pl2 = plt.plot(times, winds, label = 'Wind speed change', c = 'blue', lw = 0.5)
-	plt.gcf().autofmt_xdate()
-	myFmt = mdates.DateFormatter('%H:%M')
-	plt.gca().xaxis.set_major_formatter(myFmt)
-	plt.legend(handles=[pl1[0], pl2[0]])
-	plt.xlabel('Hours')
-	plt.ylabel('Temperature/Wind speed')
-	plt.title(city)
-	plt.show()
+		pl1 = plt.plot(times, temps, label = 'Temperature change', c = 'green', lw = 3.5, marker = 'o', mec = 'red')
+		pl2 = plt.plot(times, winds, label = 'Wind speed change', c = 'blue', lw = 0.5)
+		plt.gcf().autofmt_xdate()
+		myFmt = mdates.DateFormatter('%d.%m %H:%M')
+		plt.gca().xaxis.set_major_formatter(myFmt)
+		plt.legend(handles=[pl1[0], pl2[0]])
+		plt.xlabel('Hours')
+		plt.ylabel('Temperature/Wind speed')
+		plt.title(city)
+		plt.show()
+	elif v.get() == 2:
+		jsn = jsn['daily']['data']
+		for i in jsn:
+			t = (fahrenheit_to_celsius(i['temperatureHigh'] + fahrenheit_to_celsius(i['temperatureLow']) / 2))
+			temps.append(t)
+			times.append(datetime.datetime.fromtimestamp(int(i['time'])))
+			winds.append(i['windSpeed'])
+
+		pl1 = plt.plot(times, temps, label = 'Average temperature change', c = 'green', lw = 3.5, marker = 'o', mec = 'red')
+		pl2 = plt.plot(times, winds, label = 'Wind speed change', c = 'blue', lw = 0.5)
+		plt.gcf().autofmt_xdate()
+		myFmt = mdates.DateFormatter('%d.%m.%y')
+		plt.gca().xaxis.set_major_formatter(myFmt)
+		plt.legend(handles=[pl1[0], pl2[0]])
+		plt.xlabel('Days')
+		plt.ylabel('Average temperature/Wind speed')
+		plt.title(city)
+		plt.show()
 
 
 def get_latlon(city):
@@ -92,6 +111,16 @@ root.title('Weather')
 root.config(bg = '#1FA7E1')
 root.config()
 
+v = IntVar()
+
+radio1 = Radiobutton(root, text="48 Hours", variable=v, value=1)
+radio2 = Radiobutton(root, text="Week", variable=v, value=2)
+
+radio1.config(bg = '#1FA7E1')
+radio2.config(bg = '#1FA7E1')
+
+radio1.select()
+
 main_menu = Menu(root)
 root.config(menu=main_menu)
 file_menu = Menu(main_menu)
@@ -105,6 +134,9 @@ button = Button(root, text = 'Watch weather', command = watch)
 label.config(font = ('Arial', 15, 'bold'))
 entry.config(font = ('Arial', 15, 'bold'))
 button.config(font = ('Arial', 15, 'bold'))
+
+radio1.grid(column = 0, row = 1)
+radio2.grid(column = 1, row = 1)
 
 label.grid(column = 0, row = 0)
 entry.grid(column = 1, row = 0)
