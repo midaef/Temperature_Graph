@@ -87,15 +87,24 @@ def kelvin_to_celsius(temp):
 
 root = Tk()
 
-root.title('Weather') 
+root.title('Weather')
 
-label = Label(root, text = 'City name:')
+root.config(bg = '#1FA7E1')
+root.config()
+
+main_menu = Menu(root)
+root.config(menu=main_menu)
+file_menu = Menu(main_menu)
+main_menu.add_cascade(label="Settings", menu=file_menu)
+file_menu.add_command(label="Exit", command=root.destroy)
+
+label = Label(root, text = 'City name:', bg='#1FA7E1', fg='white')
 entry = Entry(root, width = 20)
 button = Button(root, text = 'Watch weather', command = watch)
 
-label.config(font = ('Arial', 20, 'bold'))
-entry.config(font = ('Arial', 20, 'bold'))
-button.config(font = ('Arial', 20, 'bold'))
+label.config(font = ('Arial', 15, 'bold'))
+entry.config(font = ('Arial', 15, 'bold'))
+button.config(font = ('Arial', 15, 'bold'))
 
 label.grid(column = 0, row = 0)
 entry.grid(column = 1, row = 0)
