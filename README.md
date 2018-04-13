@@ -43,6 +43,6 @@ Or you can download [Python-Libraries-Installer](https://github.com/stdian/pytho
 
 ## Author 
 
-stdian - [**stdian.ru**](http://stdian.ru)
+stdian - [stdian.ru](http://stdian.ru)
 
-danilpresent - [**https://github.com/DanilPresent **](https://github.com/DanilPresent)
+danilpresent - [https://github.com/DanilPresent](https://github.com/DanilPresent)
