@@ -61,10 +61,19 @@ def get_weather(latitude, longitude, city):
 	elif v.get() == 2:
 		jsn = jsn['daily']['data']
 		for i in jsn:
-			t = (fahrenheit_to_celsius(i['temperatureHigh'] + fahrenheit_to_celsius(i['temperatureLow']) / 2))
-			temps.append(t)
-			times.append(datetime.datetime.fromtimestamp(int(i['time'])))
-			winds.append(i['windSpeed'])
+			time1 = ''
+			time2 = ''
+			if time1 < time2:
+
+				t = fahrenheit_to_celsius(i['temperatureMin'])
+				temps.append(t)
+				times.append(datetime.datetime.fromtimestamp(int(time1)))
+
+				t2 = fahrenheit_to_celsius(i['temperatureMax'])
+				temps.append(t2)
+				times.append(datetime.datetime.fromtimestamp(int(time2)))
+
+				winds.append(i['windSpeed'])
 
 		pl1 = plt.plot(times, temps, label = 'Average temperature change', c = 'green', lw = 3.5, marker = 'o', mec = 'red')
 		pl2 = plt.plot(times, winds, label = 'Wind speed change', c = 'blue', lw = 0.5)
