@@ -108,7 +108,7 @@ def kelvin_to_celsius(temp):
 root = Tk()
 
 root.title('Weather')
-
+#st
 root.resizable(0, 0)
 
 root.config(bg = '#1FA7E1')
