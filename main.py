@@ -40,7 +40,7 @@ def get_weather(latitude, longitude, city):
 	temps = []
 	times = []
 	winds = []
-
+	windstimes = []
 	if v.get() == 1:
 		jsn = jsn['hourly']['data']
 		for i in jsn:
@@ -61,22 +61,31 @@ def get_weather(latitude, longitude, city):
 	elif v.get() == 2:
 		jsn = jsn['daily']['data']
 		for i in jsn:
-			time1 = ''
-			time2 = ''
-			if time1 < time2:
+			time1 = int(i['temperatureMinTime'])
+			time2 = int(i['temperatureMaxTime'])
+			
+			windstimes.append(datetime.datetime.fromtimestamp(int(i['time'])))
+			winds.append(i['windSpeed'])
 
+			if time1 < time2:
 				t = fahrenheit_to_celsius(i['temperatureMin'])
 				temps.append(t)
-				times.append(datetime.datetime.fromtimestamp(int(time1)))
+				times.append(datetime.datetime.fromtimestamp(time1))
 
 				t2 = fahrenheit_to_celsius(i['temperatureMax'])
 				temps.append(t2)
-				times.append(datetime.datetime.fromtimestamp(int(time2)))
+				times.append(datetime.datetime.fromtimestamp(time2))
+			elif time1 > time2:
+				t = fahrenheit_to_celsius(i['temperatureMax'])
+				temps.append(t)
+				times.append(datetime.datetime.fromtimestamp(time2))
 
-				winds.append(i['windSpeed'])
+				t2 = fahrenheit_to_celsius(i['temperatureMin'])
+				temps.append(t2)
+				times.append(datetime.datetime.fromtimestamp(time1))
 
 		pl1 = plt.plot(times, temps, label = 'Average temperature change', c = 'green', lw = 3.5, marker = 'o', mec = 'red')
-		pl2 = plt.plot(times, winds, label = 'Wind speed change', c = 'blue', lw = 0.5)
+		pl2 = plt.plot(windstimes, winds, label = 'Wind speed change', c = 'blue', lw = 0.5)
 		plt.gcf().autofmt_xdate()
 		myFmt = mdates.DateFormatter('%d.%m.%y')
 		plt.gca().xaxis.set_major_formatter(myFmt)
