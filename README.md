@@ -17,4 +17,13 @@ When you select a week, you will be shown a graph like this
 
 ![Week graph](https://github.com/DanilPresent/Temperature_Graph/blob/master/screenshots/4.png)
 
+### Errors
+
+If you write wrong city you will be shown this error message
+
+![Error message](https://github.com/DanilPresent/Temperature_Graph/blob/master/screenshots/2.png)
+
+If you have problems with connection you will be shown this error message
+
+![Error message](https://github.com/DanilPresent/Temperature_Graph/blob/master/screenshots/0.png)
 
