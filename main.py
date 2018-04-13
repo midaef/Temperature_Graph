@@ -108,8 +108,11 @@ root = Tk()
 
 root.title('Weather')
 
+root.resizable(0, 0)
+
 root.config(bg = '#1FA7E1')
 root.config()
+
 
 v = IntVar()
 
