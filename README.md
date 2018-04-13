@@ -37,11 +37,11 @@ If you have problems with connection you will be shown this error message
 * ezprint
 * pandas
 
-For install you need to type in command line: **pip install *library-name***
-Or you can download [Python-Libraries-Installer](https://github.com/stdian/python-libraries-setup)
+- For install you need to type in command line: **pip install *library-name***
+- Or you can download [Python-Libraries-Installer](https://github.com/stdian/python-libraries-setup)
 
 
-## Author 
+## Authors
 
 stdian - [stdian.ru](http://stdian.ru)
 
