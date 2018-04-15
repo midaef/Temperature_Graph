@@ -119,8 +119,8 @@ root.config()
 
 v = IntVar()
 
-radio1 = Radiobutton(root, text="48 Hours", variable=v, value=1)
-radio2 = Radiobutton(root, text="Week", variable=v, value=2)
+radio1 = Radiobutton(root, text="48 Hours", variable=v, value=1, fg='white')
+radio2 = Radiobutton(root, text="Week", variable=v, value=2, fg='white')
 
 radio1.config(bg = '#1FA7E1')
 radio2.config(bg = '#1FA7E1')
