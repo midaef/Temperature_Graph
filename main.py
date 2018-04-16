@@ -18,7 +18,7 @@ weather_url = 'https://api.darksky.net/forecast/'
 weather_api_key = '08d603a88b0d98d0c6b24dfb41f716bc'
 
 
-def watch():
+def watch(arg = None):
 	city = entry.get()
 	latlon = get_latlon(city)
 	if latlon == 'no_net':
@@ -30,7 +30,6 @@ def watch():
 	else:
 		root.destroy()
 		get_weather(latlon[0], latlon[1], latlon[2])
-
 
 
 def get_weather(latitude, longitude, city):
@@ -136,6 +135,8 @@ file_menu.add_command(label="Exit", command=root.destroy)
 label = Label(root, text = 'City name:', bg='#1FA7E1', fg='white')
 entry = Entry(root, width = 20)
 button = Button(root, text = 'Watch weather', command = watch)
+
+root.bind('<Return>', watch)
 
 label.config(font = ('Arial', 15, 'bold'))
 entry.config(font = ('Arial', 15, 'bold'))
